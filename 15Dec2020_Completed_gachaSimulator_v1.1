@@ -1,0 +1,100 @@
+# Mornitoring version 1.1
+# It collect gacha's probability and stack info of the Arknights mobile game.
+# Python 3.7
+# Made by JISKey623(github)
+
+import random
+
+gachaList = ['666special','66star','5star','4star','3star']
+weightList = [0.007,0.013,0.08,0.5,0.4]
+ccount=0
+# ccount is a specific value.Every steps above the 50th gacha, they give 2%p of additional probability to 6stars
+cnorm=0
+# cnorm is estimating about every 100th gacha.
+gachaloop=300
+# Set Gacha acting
+specialStarCol=[]
+# 6 Special counting stack array
+specialStarIndex=[]
+# 6 Special appeared No
+
+star666Stack = 0
+star66Stack = 0
+star5Stack = 0
+star4Stack = 0
+star3Stack = 0
+# All the stacks collector
+
+for i in range(0,gachaloop):
+
+    a=random.choices(gachaList, weightList, k=1)
+    print(' Gacha No :' + str(i+1))
+    print(' Stack : ' + str(cnorm))
+    print(' baq W wiChan & Weedy\'s count :' + str(ccount))
+    print(' Probability : ' + str(weightList))
+    print(' Result : ' + str(a))
+    prove=a
+    print('')
+
+    cnorm+=1
+        
+    if cnorm>49 :
+        ccount+=1
+        # If cnorm is 49, ccount 1. And cnorm 99, ccount 51
+
+    if ccount!=0 : 
+        weightList = [(0.007+(0.007*ccount)),(0.013+(0.013*ccount)),(0.08-(ccount*0.08*2/98)),(0.5-(ccount*0.5*2/98)),(0.4-(ccount*0.4*2/98))]
+        # It always count until 49.
+
+    if cnorm>98 :
+        print('" 6star appeard. Stack reset"')
+        print('')
+        cnorm=0
+        ccount=0
+        weightList = [0.007,0.013,0.08,0.5,0.4]
+        
+    if prove==['666special'] :
+        star666Stack+=1
+        print('" 6star appeard. Stack reset"')
+        print('')
+        specialStarCol.append(cnorm)
+        specialStarIndex.append(i)
+        cnorm=0
+        ccount=0
+        weightList = [0.007,0.013,0.08,0.5,0.4]
+    
+    if prove==['66star'] :
+        star66Stack+=1
+        print('" 6star appeard. Stack reset"')
+        print('')
+        cnorm=0
+        ccount=0
+        weightList = [0.007,0.013,0.08,0.5,0.4]
+
+    if prove==['5star'] :
+        star5Stack+=1
+
+    if prove==['4star'] :
+        star4Stack+=1
+
+    if prove==['3star'] :
+        star3Stack+=1
+
+    if i==(gachaloop-1) :
+        print('"Each percentage of gacha ratio"')
+        print('"[ 666Special, 66Star, 5Star, 4Star, 3Star ]"')
+        print('"[ ' + str(star666Stack/i) + ' , ' + str(star66Stack/i) + ' , ' + str(star5Stack/i) + ' , ' + str(star4Stack/i) + ' , ' + str(star3Stack/i) + ']"')
+        lenArray=len(specialStarCol)
+        if lenArray==0:
+            print(' There wasn\'t any 6 Special star in your Gacha.')
+            break
+        arrayStar=sum(specialStarCol)/lenArray
+        print(' The counts you got 666Special :' + str(lenArray))
+        print(' The average of appearance 666Special is : '+ str(arrayStar))
+        print('')
+        for j in range(lenArray) :
+            whathefuck=specialStarCol[j]
+            whathefuckindex=specialStarIndex[j]
+            print(' The 6 Special Star was at No.'+ str(whathefuckindex) + ', and Stack of your ' + str(j+1) + ' one is : ' + str(whathefuck))
+        
+
